@@ -67,11 +67,11 @@ components:
 
 ## Задание выполнено с помощью сервиса LastFM. Ключ API и ссылки находятся в .env файле
 ### Структура .env файла:
-# - DATABASE_URL=postgres://user:password@localhost:5432/music_librarywith?sslmode=disable
+#### - DATABASE_URL=postgres://user:password@localhost:5432/music_librarywith?sslmode=disable
 Подключение к бд PosrgreSQL
-# - API_BASE_URL=https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=8301c7ec514ad333e208da049b938a9a&artist={artist}&track={track}&format=json
+#### - API_BASE_URL=https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=8301c7ec514ad333e208da049b938a9a&artist={artist}&track={track}&format=json
 API, откуда берётся инфорамация о композициях
-# - LASTFM_API_KEY=8301c7ec514ad333e208da049b938a9a
+#### - LASTFM_API_KEY=8301c7ec514ad333e208da049b938a9a
 Ключ для доступа к LastFM API (данный ключ будет удален через 3 недели)
 
 # Запуск:
