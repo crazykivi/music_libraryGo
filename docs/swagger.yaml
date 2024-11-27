@@ -1,0 +1,140 @@
+definitions:
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.Song:
+    description: Детали песни
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      group:
+        type: string
+      id:
+        type: integer
+      link:
+        type: string
+      releaseDate:
+        type: string
+      song:
+        type: string
+      text:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact:
+    email: nik.ita-redko@yandex.ru
+    name: Nikita Redko
+  description: This is a simple API for managing a music library.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Music Library API
+  version: "1.0"
+paths:
+  /songs:
+    get:
+      consumes:
+      - application/json
+      description: Get all songs from the database with optional filters and pagination
+      parameters:
+      - description: Filter by group
+        in: query
+        name: group
+        type: string
+      - description: Filter by song
+        in: query
+        name: song
+        type: string
+      - default: 0
+        description: Number of records to skip
+        in: query
+        name: skip
+        type: integer
+      - default: 10
+        description: Number of records to return
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Song'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get all songs
+      tags:
+      - Songs
+    post:
+      consumes:
+      - application/json
+      description: Add a new song to the library, enriched with details from an external
+        API
+      parameters:
+      - description: Song details
+        in: body
+        name: song
+        required: true
+        schema:
+          $ref: '#/definitions/models.Song'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Song'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Add a new song
+      tags:
+      - Songs
+  /songs/{id}:
+    delete:
+      description: Delete a song by its ID
+      parameters:
+      - description: Song ID
+        in: path
+        name: id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Song'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Delete a song
+      tags:
+      - Songs
+swagger: "2.0"
