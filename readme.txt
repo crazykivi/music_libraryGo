@@ -1,106 +1,33 @@
-# Выполненное задание на вакансию Junior GO Developer
-## Задание: Необходимо реализовать следующее
-# 1. Выставить rest методы
-- Получение данных библиотеки с фильтрацией по всем полям и пагинацией
-- Получение текста песни с пагинацией по куплетам
-- Удаление песни
-- Изменение данных песни
-- Добавление новой песни в формате
-JSON
-{
- "group": "Muse",
- "song": "Supermassive Black Hole"
-}
-# 2. При добавлении сделать запрос в АПИ, описанного сваггером. Апи, описанный сваггером, будет поднят при проверке тестового задания. Реализовывать его отдельно не нужно
-openapi: 3.0.3
-info:
-  title: Music info
-  version: 0.0.1
-paths:
-  /info:
-    get:
-      parameters:
-        - name: group
-          in: query
-          required: true
-          schema:
-            type: string
-        - name: song
-          in: query
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SongDetail'
-        '400':
-          description: Bad request
-        '500':
-          description: Internal server error
-components:
-  schemas:
-    SongDetail:
-      required:
-        - releaseDate
-        - text
-        - link
-      type: object
-      properties:
-        releaseDate:
-          type: string
-          example: 16.07.2006
-        text:
-          type: string
-          example: Ooh baby, don't you know I suffer?\nOoh baby, can you hear me moan?\nYou caught me under false pretenses\nHow long before you let me go?\n\nOoh\nYou set my soul alight\nOoh\nYou set my soul alight
-        link:
-          type: string
-          example: https://www.youtube.com/watch?v=Xsp3_a-PMTw
+Проект выложен на гитхаб, если требуется, он будет перенесен в приватный доступ. На гите отсутствует .env файла для доступа.
+Запуск:
+1. Требуется импортировать бд music_librarywith_dump.sql в базу данных "music_librarywith"
+2. Требуется открыть терминал, перейти в папку с проектом и прописать команду: go run main.go
+При успешном запуске:
+C:\GoLangProjects\library>go run main.go
+2024/11/27 12:28:56 Loading environment variables from .env file...
+2024/11/27 12:28:56 Connecting to database with DSN: postgres://postgres:112233@localhost:5432/music_librarywith?sslmode=disable
+2024/11/27 12:28:56 Successfully connected to the database.
+2024/11/27 12:28:56 Running database migrations...
+2024/11/27 12:28:56 Database migration completed successfully.
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
 
-# 3. Обогащенную информацию положить в БД postgres (структура БД должна быть создана путем миграций при старте сервиса)
-# 4. Покрыть код debug- и info-логами
-# 5. Вынести конфигурационные данные в .env-файл
-# 6. Сгенерировать сваггер на реализованное АПИ
-
-## Задание выполнено с помощью сервиса LastFM. Ключ API и ссылки находятся в .env файле
-### Структура .env файла:
-- DATABASE_URL=postgres://user:password@localhost:5432/music_librarywith?sslmode=disable
-Подключение к бд PosrgreSQL
-- API_BASE_URL=https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=8301c7ec514ad333e208da049b938a9a&artist={artist}&track={track}&format=json
-API, откуда берётся инфорамация о композициях
-- LASTFM_API_KEY=8301c7ec514ad333e208da049b938a9a
-Ключ для доступа к LastFM API (данный ключ будет удален через 3 недели)
-
-# Запуск:
-## 1. Требуется импортировать бд music_librarywith_dump.sql в базу данных "music_librarywith"
-## 2. Требуется открыть терминал, перейти в папку с проектом и прописать команду: go run main.go
-## При успешном запуске:
-- C:\GoLangProjects\library>go run main.go
-- 2024/11/27 12:28:56 Loading environment variables from .env file...
-- 2024/11/27 12:28:56 Connecting to database with DSN: postgres://postgres:112233@localhost:5432/music_librarywith?sslmode=disable
-- 2024/11/27 12:28:56 Successfully connected to the database.
-- 2024/11/27 12:28:56 Running database migrations...
-- 2024/11/27 12:28:56 Database migration completed successfully.
-- [GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
-- [GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
  - using env:   export GIN_MODE=release
  - using code:  gin.SetMode(gin.ReleaseMode)
 
-- [GIN-debug] GET    /songs                    --> music-library/controller.GetSongs (3 handlers)
-- [GIN-debug] POST   /songs                    --> music-library/controller.CreateSong (3 handlers)
-- [GIN-debug] DELETE /songs/:id                --> music-library/controller.DeleteSong (3 handlers)
-- [GIN-debug] GET    /swagger.json             --> main.main.func1 (3 handlers)
-- [GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
-- Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
-- [GIN-debug] Listening and serving HTTP on :8080
-- [GIN] 2024/11/27 - 12:28:58 |←[97;42m 200 ←[0m|     40.1053ms |             ::1 |←[97;44m GET     ←[0m "/swagger.json"
-## Для http запросов я использовал Postman.
-### Пример запроса:
+[GIN-debug] GET    /songs                    --> music-library/controller.GetSongs (3 handlers)
+[GIN-debug] POST   /songs                    --> music-library/controller.CreateSong (3 handlers)
+[GIN-debug] DELETE /songs/:id                --> music-library/controller.DeleteSong (3 handlers)
+[GIN-debug] GET    /swagger.json             --> main.main.func1 (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2024/11/27 - 12:28:58 |←[97;42m 200 ←[0m|     40.1053ms |             ::1 |←[97;44m GET     ←[0m "/swagger.json"
+
+Для http запросов я использовал Postman.
+Пример запроса:
 GET http://localhost:8080/songs
-### Ответ:
+Ответ:
 [
     {
         "id": 6,
